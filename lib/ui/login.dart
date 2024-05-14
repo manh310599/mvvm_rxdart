@@ -28,6 +28,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,32 +36,37 @@ class _LoginState extends State<Login> {
             StreamBuilder<bool>(
                 stream: loginMVVM.tkFormat,
                 builder: (context, snapshot) {
-                  print('test thu ${snapshot.data}');
-                  return TextFormField(
-                    controller: loginMVVM.tkField,
-                    onChanged: (value) {
-                      //loginMVVM.tkField.text = value;
-                      loginMVVM.tkSink.add(value);
-                      loginMVVM.check();
-                    },
-                    decoration: InputDecoration(
-                        errorText:
-                            snapshot.data == false ? 'email sai format' : null),
+                  return Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextFormField(
+                      controller: loginMVVM.tkField,
+                      onChanged: (value) {
+                        //loginMVVM.tkField.text = value;
+                        loginMVVM.tkSink.add(value);
+                        loginMVVM.check();
+                      },
+                      decoration: InputDecoration(
+                          errorText:
+                              snapshot.data == false ? 'email sai format' : null),
+                    ),
                   );
                 }),
             StreamBuilder<bool>(
                 stream: loginMVVM.mkFormat,
                 builder: (context, snapshot) {
-                  return TextFormField(
-                    controller: loginMVVM.mkField,
-                    onChanged: (value) {
-                      //loginMVVM.mkField.text = value;
-                      loginMVVM.mkSink.add(value);
-                      loginMVVM.check();
-                    },
-                    decoration: InputDecoration(
-                        errorText:
-                            snapshot.data == false ? 'pass sai format' : null),
+                  return Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextFormField(
+                      controller: loginMVVM.mkField,
+                      onChanged: (value) {
+                        //loginMVVM.mkField.text = value;
+                        loginMVVM.mkSink.add(value);
+                        loginMVVM.check();
+                      },
+                      decoration: InputDecoration(
+                          errorText:
+                              snapshot.data == false ? 'pass sai format' : null),
+                    ),
                   );
                 }),
             StreamBuilder<bool>(
@@ -70,9 +76,11 @@ class _LoginState extends State<Login> {
                   onPressed:  () async {
                     final check = await loginMVVM.login();
                     if(check ==  true){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return Home();
+                      if(context.mounted) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const Home();
                       },));
+                      }
                     }
                   },
                   style:  ButtonStyle(

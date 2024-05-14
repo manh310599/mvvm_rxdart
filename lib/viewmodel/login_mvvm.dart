@@ -21,11 +21,11 @@ class LoginMVVM {
   TextEditingController mkField = TextEditingController();
 
 ////////////////////////////get////////////////////////////////////////
-  Stream<String> get tk => _tk.stream;
+  Stream<String> get tk => _tk.stream.skip(1);
 
   Sink<String> get tkSink => _tk.sink;
 
-  Stream<String> get mk => _mk.stream;
+  Stream<String> get mk => _mk.stream.skip(1);
 
   Sink<String> get mkSink => _mk.sink;
 

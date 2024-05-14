@@ -7,15 +7,16 @@ import 'package:rxdart/rxdart.dart';
 
 class FoodViewModel {
   IRepoApi iRepoApi = RepoApi();
-  final _foodStream = PublishSubject <ResponseData>();
-
+  final _foodStream = PublishSubject<ResponseData>();
+  final _foodByCharacter = PublishSubject<ResponseData>();
 
   Stream<ResponseData> get foodStream => _foodStream.stream;
 
   Sink<ResponseData> get foodSink => _foodStream.sink;
 
-  var compositeSubscription = CompositeSubscription();
+  Stream<ResponseData> get foodByCharacter => _foodByCharacter.stream;
 
+  Sink<ResponseData> get foodByCharacterSink => _foodByCharacter.sink;
 
   getData() async {
     foodSink.add(await iRepoApi.goodFood());
@@ -23,6 +24,10 @@ class FoodViewModel {
 
   getData2() async {
     foodSink.add(await iRepoApi.goodFood());
+  }
+
+  getDataByCharacter(String character) async {
+    foodByCharacterSink.add(await iRepoApi.mealByCharacter(character));
   }
 
   dispose() {
